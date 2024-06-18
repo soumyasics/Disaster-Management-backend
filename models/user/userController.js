@@ -191,7 +191,6 @@ const viewuserbuid=((req,res)=>{
 const deleteUserById=(req,res)=>{
     userschema.findByIdAndDelete({_id:req.params.id}).exec()
     .then(data=>{
-    // emps=data
       console.log(data);
       res.json({
           status:200,
@@ -209,8 +208,6 @@ const deleteUserById=(req,res)=>{
   })
   
   }
-
-
 
   module.exports={
             registeruser,upload,
