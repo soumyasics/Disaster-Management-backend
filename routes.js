@@ -3,6 +3,7 @@ const router=express.Router()
 
 const user=require("./models/user/userController")
 const volunteers=require("./models/volunteers/volunteersController")
+const rescuemembers=require("./models/rescueteam/rescueteamController")
 
 router.post("/registeruser",user.upload,user.registeruser)
 router.post("/userlogin",user.userlogin)
@@ -18,5 +19,9 @@ router.post("/volunteerforgotpassword",volunteers.forgotPwd)
 router.post("/viewalladvocates",volunteers.viewallvolenteers)
 router.post("/viewvolunteerById/:id",volunteers.viewvolenteerById)
 router.post("/deletevolunteerBy/:id",volunteers.deletevolenteerById)
+
+router.post("/registerrescuemembers",rescuemembers.registerrescuemember)
+router.post("/rescuememberslogin",rescuemembers.rescuememberlogin)
+
 
 module.exports=router
