@@ -15,18 +15,23 @@ const storage = multer.diskStorage({
   
   const registeruser = (req, res) => {
     const shops = new userschema({
-      firstname: req.body.firstname,
-      lastname: req.body.lastname,
-      gender: req.body.gender,
-      age: req.body.age,
-      street: req.body.street,
-      city: req.body.city,
-      pincode: req.body.pincode,
-      state: req.body.state,
-      phone: req.body.phone,
-      email: req.body.email,
-      password: req.body.password,
-      image: req.file,
+      // firstname: req.body.firstname,
+      // lastname: req.body.lastname,
+      // gender: req.body.gender,
+      // age: req.body.age,
+      // street: req.body.street,
+      // city: req.body.city,
+      // pincode: req.body.pincode,
+      // state: req.body.state,
+      // phone: req.body.phone,
+      // email: req.body.email,
+      // password: req.body.password,
+      // image: req.file,
+      name:req.body.name,
+      phone:req.body.phone,
+      email:req.body.email,
+      address:req.body.address,
+      password:req.body.password
     });
     shops
       .save()
@@ -46,7 +51,7 @@ const storage = multer.diskStorage({
             errMsg = "Email Id already in Use";
           }
           return res.status(409).json({
-            status: 409,
+            status: 11000,
             msg: errMsg,
             Error: err,
           });
@@ -63,7 +68,7 @@ const storage = multer.diskStorage({
   const userlogin=((req,res)=>{
    const email=req.body.email
    const password=req.body.password
-    userschema.find({emial:email})
+    userschema.findOne({email:email})
     .exec()
     .then((data)=>{
         if(password==data.password){
@@ -160,17 +165,21 @@ const viewuserbuid=((req,res)=>{
 
   const editUserById=(req,res)=>{   
     userschema.findByIdAndUpdate({_id:req.params.id},{
-        firstname: req.body.firstname,
-        lastname: req.body.lastname,
-        gender: req.body.gender,
-        age: req.body.age,
-        street: req.body.street,
-        city: req.body.city,
-        pincode: req.body.pincode,
-        state: req.body.state,
-        phone: req.body.phone,
-        email: req.body.email,
-        image: req.file,
+        // firstname: req.body.firstname,
+        // lastname: req.body.lastname,
+        // gender: req.body.gender,
+        // age: req.body.age,
+        // street: req.body.street,
+        // city: req.body.city,
+        // pincode: req.body.pincode,
+        // state: req.body.state,
+        // phone: req.body.phone,
+        // email: req.body.email,
+        // image: req.file,
+        name:req.body.name,
+        phone:req.body.phone,
+        email:req.body.email,
+        address:req.body.address,
         })
   .exec()
   .then(data=>{
