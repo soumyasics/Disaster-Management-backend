@@ -13,12 +13,16 @@ router.post("/viewuserbyid/:id",user.viewuserbuid)
 router.post("/editusrprofile/:id",user.editUserById)
 router.post("/deleteuser/:id",user.deleteUserById)
 
+
+
 router.post("/registervolunteer",volunteers.registervolunteers)
 router.post("/volunteerlogin",volunteers.volenteerslogin)
-router.post("/volunteerforgotpassword",volunteers.forgotPwd)
+router.post("/volunteerforgotpassword/:id",volunteers.forgotPwd)
 router.post("/viewalladvocates",volunteers.viewallvolenteers)
 router.post("/viewvolunteerById/:id",volunteers.viewvolenteerById)
 router.post("/deletevolunteerBy/:id",volunteers.deletevolenteerById)
+router.post("/forgotPWDsentMail",volunteers.forgotPWDsentMail)
+
 
 router.post("/registerrescuemembers",rescuemembers.registerrescuemember)
 router.post("/rescuememberslogin",rescuemembers.rescuememberlogin)

@@ -1,7 +1,9 @@
 const volunteerschema = require('./volunteersSchema');
 const secret = 'volunteers'; 
-
 const multer = require("multer");
+const nodemailer = require('nodemailer');
+const Configue = require('../../Configue');
+
 
 
 const storage = multer.diskStorage({
@@ -12,7 +14,34 @@ const storage = multer.diskStorage({
       cb(null, file.originalname);
     },
   });
+
+  //Mail configuration of resetpswd
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'supprot.web.application@gmail.com',
+      pass: 'ukyw olqq kuql jnty'
+    }
+  });
+
+  const testMail = (data) => {
+    let email=data.email
+    const mailOptions = {
+      from: 'supprot.web.application@gmail.com',
+      to: email,
+      subject: 'Reset Password From Web_Guard',
+      text: `Dear ${data.name},${'\n'}please check this link : ${Configue.localUrl}${data._id} to reset your password`
+    };
   
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log('Error:', error);
+      } else {
+        console.log('Email sent:', info.response);
+      }
+    });
+  }
+    
 
 // Volenteers Registration
 const registervolunteers = async (req, res) => {
@@ -89,7 +118,7 @@ const volenteerslogin=((req,res)=>{
 // Volunteers Forgot Password
 
 const forgotPwd=(req,res)=>{  
-    volunteerschema.findOneAndUpdate({email:req.body.email},{password:req.body.password})
+    volunteerschema.findByIdAndUpdate({_id:req.body.id},{password:req.body.password})
   .exec()
   .then(data=>{
     if(data!=null)
@@ -207,6 +236,45 @@ const editvolenteerById=(req,res)=>{
   })
   }
 
+  const forgotPWDsentMail=async(req,res)=>{
+    let data=null
+    try{
+         data = await volunteerschema.findOne({ email:  req.body.email })
+        // if(data==null){
+        //  data = await workers.findOne({ email:  req.body.email })
+        // }
+        // if(data==null){
+        //   data = await employer.findOne({ email: req.body.email})
+        // }
+        
+          if (data != null)
+            {
+              let id=data._id.toString()
+              testMail(data)
+            res.json({
+              status: 200,
+              msg: "Data Obtained successfully",
+            });
+          }
+          else
+            res.json({
+              status: 500,
+              msg: "Enter your Registered MailId",
+            });
+        }
+        catch(err) {
+          console.log(err);
+          res.json({
+            status: 500,
+            msg: "Data not Updated",
+            Error: err,
+          })
+        }
+    
+      }
+    
+
+
 module.exports = {
     registervolunteers,
     volenteerslogin,
@@ -215,4 +283,5 @@ module.exports = {
     viewvolenteerById,
     editvolenteerById,
     deletevolenteerById,
+    forgotPWDsentMail
 };
