@@ -51,7 +51,7 @@ const storage = multer.diskStorage({
             errMsg = "Email Id already in Use";
           }
           return res.status(409).json({
-            status: 11000,
+            status: 409,
             msg: errMsg,
             Error: err,
           });
