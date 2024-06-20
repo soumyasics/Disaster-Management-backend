@@ -14,7 +14,6 @@ const storage = multer.diskStorage({
   });
 
   //Rescue Member Register
-  
   const registerrescuemember = async (req, res) => {
     const rescuemember = new rescuemembersSchema({
         name: req.body.name,
