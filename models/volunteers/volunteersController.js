@@ -118,30 +118,32 @@ const volenteerslogin=((req,res)=>{
 
 // Volunteers Forgot Password
 
-const forgotPwd=(req,res)=>{  
-    volunteerschema.findByIdAndUpdate({_id:req.body.id},{password:req.body.password})
-  .exec()
-  .then(data=>{
-    if(data!=null)
-    res.json({
-        status:200,
-        msg:"Updated successfully"
+const forgotPwd=((req,res)=>{
+  volunteerschema.findByIdAndUpdate({_id:req.params.id},{ password: req.body.password }
+    )
+    .exec()
+    .then((data) => {
+      if (data != null)
+        res.json({
+          status: 200,
+          msg: "Updated successfully",
+        });
+      else
+        res.json({
+          status: 500,
+          msg: "User Not Found",
+        });
     })
-    else
-    res.json({
-      status:500,
-      msg:"User Not Found"
-     
-  })
-  }).catch(err=>{
-    console.log(err);
-    res.json({
-        status:500,
-        msg:"Data not Updated",
-        Error:err
-    })
-  })
-  }
+    .catch((err) => {
+      console.log(err);
+      res.json({
+        status: 500,
+        msg: "Data not Updated",
+        Error: err,
+      });
+    });
+
+})
 
   //View all Volenteers
 
