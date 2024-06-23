@@ -47,17 +47,6 @@ const storage = multer.diskStorage({
 // Volenteers Registration
 const registervolunteers = async (req, res) => {
   try {
-    const existingCustomer1 = volunteerschema.findOne({ email: req.body.email }).exec();
-    const existingCustomer2 = users.findOne({ email: req.body.email }).exec();
-
-    if (existingCustomer1 || existingCustomer2) {
-      return res.status(409).json({
-        status: 409,
-        msg: "Email Already Registered With Us !!",
-        data: null
-      });
-    }
-
     const volunteer = new volunteerschema({
       name: req.body.name,
       age: req.body.age,
@@ -71,13 +60,24 @@ const registervolunteers = async (req, res) => {
       skills: req.body.skills,
     });
 
-    const data = await volunteer.save();
+    const existingCustomer1 = await volunteerschema.findOne({ email: req.body.email }).exec();
+    const existingCustomer2 = await users.findOne({ email: req.body.email }).exec();
 
-    res.status(200).json({
+    if (existingCustomer1 || existingCustomer2) {
+      return res.status(409).json({
+        status: 409,
+        msg: "Email Already Registered With Us !!",
+        data: null
+      });
+    }
+
+    const data = await volunteer.save();
+    res.json({
       status: 200,
       msg: "Inserted Successfully",
-      data: data
+      data: data,
     });
+
   } catch (err) {
     if (err.code === 11000) {
       let errMsg = "Data not Inserted";

@@ -15,15 +15,17 @@ const userSchema = mongoose.Schema({
     type: Number,
     unique: true,
     required: true,
-
     dropDups: true,
   },
   email: {
     type: String,
     unique: true,
     required: true,
-
     dropDups: true,
+  },
+  address: {
+    type: String,
+    required: true,
   },
   password: {
     type: String,

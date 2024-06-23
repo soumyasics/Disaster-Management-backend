@@ -83,7 +83,7 @@ const storage = multer.diskStorage({
   const userlogin=((req,res)=>{
    const email=req.body.email
    const password=req.body.password
-    userschema.find({emial:email})
+    userschema.findOne({email:email})
     .exec()
     .then((data)=>{
         if(password==data.password){
