@@ -5,7 +5,7 @@ const user=require("./models/user/userController")
 const volunteers=require("./models/volunteers/volunteersController")
 const rescuemembers=require("./models/rescueteam/rescueteamController")
 
-router.post("/registeruser",user.upload,user.registeruser)
+router.post("/registeruser",user.registeruser)
 router.post("/userlogin",user.userlogin)
 router.post("/userforgotpswd",user.forgotPwd)
 router.post("/viewallusers",user.viewalluser)

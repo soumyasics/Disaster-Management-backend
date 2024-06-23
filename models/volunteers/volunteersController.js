@@ -3,6 +3,7 @@ const secret = 'volunteers';
 const multer = require("multer");
 const nodemailer = require('nodemailer');
 const Configue = require('../../Configue');
+const users=require('../user/userSchema')
 
 
 
@@ -45,44 +46,56 @@ const storage = multer.diskStorage({
 
 // Volenteers Registration
 const registervolunteers = async (req, res) => {
-  const volenteers = new volunteerschema({
-    name: req.body.name,
-    age: req.body.age,
-    gender: req.body.gender,
-    phone: req.body.phone,
-    email: req.body.email,
-    password: req.body.password,
-    address: req.body.address,
-    city: req.body.city,
-    state: req.body.state,
-    skills: req.body.skills,
-  });
-
   try {
-    const data = await volenteers.save();
+    const volunteer = new volunteerschema({
+      name: req.body.name,
+      age: req.body.age,
+      gender: req.body.gender,
+      phone: req.body.phone,
+      email: req.body.email,
+      password: req.body.password,
+      address: req.body.address,
+      city: req.body.city,
+      state: req.body.state,
+      skills: req.body.skills,
+    });
+
+    const existingCustomer1 = await volunteerschema.findOne({ email: req.body.email }).exec();
+    const existingCustomer2 = await users.findOne({ email: req.body.email }).exec();
+
+    if (existingCustomer1 || existingCustomer2) {
+      return res.status(409).json({
+        status: 409,
+        msg: "Email Already Registered With Us !!",
+        data: null
+      });
+    }
+
+    const data = await volunteer.save();
     res.json({
       status: 200,
       msg: "Inserted Successfully",
       data: data,
     });
+
   } catch (err) {
     if (err.code === 11000) {
       let errMsg = "Data not Inserted";
-      if (err.keyPattern.phone) {
+      if (err.keyPattern && err.keyPattern.phone) {
         errMsg = "Contact already in Use";
-      } else if (err.keyPattern.email) {
+      } else if (err.keyPattern && err.keyPattern.email) {
         errMsg = "Email Id already in Use";
       }
       return res.status(409).json({
         status: 409,
         msg: errMsg,
-        Error: err,
+        Error: err
       });
     }
     res.status(500).json({
       status: 500,
       msg: "Data not Inserted",
-      Error: err,
+      Error: err
     });
   }
 };
@@ -242,9 +255,9 @@ const editvolenteerById=(req,res)=>{
     let data=null
     try{
          data = await volunteerschema.findOne({ email:  req.body.email })
-        // if(data==null){
-        //  data = await workers.findOne({ email:  req.body.email })
-        // }
+         if(data==null){
+          data = await users.findOne({ email:  req.body.email })
+        }
         // if(data==null){
         //   data = await employer.findOne({ email: req.body.email})
         // }

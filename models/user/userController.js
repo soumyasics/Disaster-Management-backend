@@ -1,5 +1,6 @@
 const userschema=require("./userSchema")
 const multer = require("multer");
+const volunteers=require("../volunteers/volunteersSchema")
 
 
 const storage = multer.diskStorage({
@@ -13,26 +14,34 @@ const storage = multer.diskStorage({
   
   const upload = multer({ storage: storage }).single("image");
   
-  const registeruser = (req, res) => {
+  const registeruser =async (req, res) => {
     const shops = new userschema({
-      // firstname: req.body.firstname,
-      // lastname: req.body.lastname,
-      // gender: req.body.gender,
-      // age: req.body.age,
-      // street: req.body.street,
-      // city: req.body.city,
-      // pincode: req.body.pincode,
-      // state: req.body.state,
-      // phone: req.body.phone,
-      // email: req.body.email,
-      // password: req.body.password,
+      name: req.body.name,
+      address: req.body.address,
+      phone: req.body.phone,
+      email: req.body.email,
+      password: req.body.password,
       // image: req.file,
-      name:req.body.name,
-      phone:req.body.phone,
-      email:req.body.email,
-      address:req.body.address,
-      password:req.body.password
     });
+    let existingCustomer1 = await userschema.findOne({email:req.body.email});
+    let existingCustomer2 = await volunteers.findOne({email:req.body.email});
+    // let existingCustomer3 = await employer.findOne({email:req.body.email})
+
+    if(existingCustomer1||existingCustomer2 ){
+        return res.json ({
+            status : 409,
+            msg : "Email Already Registered With Us !!",
+            data : null
+        })
+    }
+    let existingCustomerByPhone = await userschema.findOne({ phone: req.body.phone });
+    if (existingCustomerByPhone) {
+      return res.status(409).json({
+        status: 409,
+        msg: "Contact already in Use",
+        data: null
+      });
+    }
     shops
       .save()
       .then((data) => {
@@ -43,25 +52,31 @@ const storage = multer.diskStorage({
         });
       })
       .catch((err) => {
-        if (err.code === 11000) {
-          let errMsg = "Data not Inserted";
-          if (err.keyPattern.hasOwnProperty("phone")) {
-            errMsg = "Contact already in Use";
-          } else if (err.keyPattern.hasOwnProperty("email")) {
-            errMsg = "Email Id already in Use";
-          }
-          return res.status(409).json({
-            status: 409,
-            msg: errMsg,
-            Error: err,
-          });
-        }
-        res.status(500).json({
-          status: 500,
-          msg: "Data not Inserted",
-          Error: err,
-        });
-      });
+        res.json({
+          status:500,
+          msg:err
+      })
+  })
+
+      //   if (err.code === 11000) {
+      //     let errMsg = "Data not Inserted";
+      //     if (err.keyPattern.hasOwnProperty("phone")) {
+      //       errMsg = "Contact already in Use";
+      //     } else if (err.keyPattern.hasOwnProperty("email")) {
+      //       errMsg = "Email Id already in Use";
+      //     }
+      //     return res.status(409).json({
+      //       status: 409,
+      //       msg: errMsg,
+      //       Error: err,
+      //     });
+      //   }
+      //   res.status(500).json({
+      //     status: 500,
+      //     msg: "Data not Inserted",
+      //     Error: err,
+      //   });
+      // });
   };
   //user registration completed
 
@@ -165,21 +180,11 @@ const viewuserbuid=((req,res)=>{
 
   const editUserById=(req,res)=>{   
     userschema.findByIdAndUpdate({_id:req.params.id},{
-        // firstname: req.body.firstname,
-        // lastname: req.body.lastname,
-        // gender: req.body.gender,
-        // age: req.body.age,
-        // street: req.body.street,
-        // city: req.body.city,
-        // pincode: req.body.pincode,
-        // state: req.body.state,
-        // phone: req.body.phone,
-        // email: req.body.email,
-        // image: req.file,
-        name:req.body.name,
-        phone:req.body.phone,
-        email:req.body.email,
-        address:req.body.address,
+      name: req.body.name,
+      address: req.body.address,
+      phone: req.body.phone,
+      email: req.body.email,
+      password: req.body.password,
         })
   .exec()
   .then(data=>{
@@ -219,7 +224,7 @@ const deleteUserById=(req,res)=>{
   }
 
   module.exports={
-            registeruser,upload,
+            registeruser,
             userlogin,
             forgotPwd,
             viewalluser,
