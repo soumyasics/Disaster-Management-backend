@@ -134,9 +134,142 @@ const rescuememberlogin=((req,res)=>{
   
   })
   
+  const adminapproveresque=((req,res)=>{
+    rescuemembersSchema.findByIdAndUpdate({_id:req.params.id},{ isActive:true }
+      )
+      .exec()
+      .then((data) => {
+        if (data != null)
+          res.json({
+            status: 200,
+            msg: "Activated successfully",
+          });
+        else
+          res.json({
+            status: 500,
+            msg: "User Not Found",
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.json({
+          status: 500,
+          msg: "Data not Updated",
+          Error: err,
+        });
+      });
+  
+  })
+
+  const adminrejectresque=((req,res)=>{
+    rescuemembersSchema.findByIdAndUpdate({_id:req.params.id},{ isActive:false }
+      )
+      .exec()
+      .then((data) => {
+        if (data != null)
+          res.json({
+            status: 200,
+            msg: "Activated successfully",
+          });
+        else
+          res.json({
+            status: 500,
+            msg: "User Not Found",
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.json({
+          status: 500,
+          msg: "Data not Updated",
+          Error: err,
+        });
+      });
+  
+  })
+
+
+  const viewallresquemembers=((req,res)=>{
+    rescuemembersSchema.find({})
+    .exec()
+    .then((data) => {
+      if (data != null)
+        res.json({
+          status: 200,
+          msg: "Find successfully",
+          data:data
+
+        });
+      else
+        res.json({
+          status: 500,
+          msg: "User Not Found",
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.json({
+        status: 500,
+        msg: "Data not Updated",
+        Error: err,
+      });
+    });
+
+  })
+
+  const viewresquemembersbyid=((req,res)=>{
+    rescuemembersSchema.findById({_id:req.params.id})
+    .exec()
+    .then((data) => {
+      if (data != null)
+        res.json({
+          status: 200,
+          msg: "Find successfully",
+          data:data
+        });
+      else
+        res.json({
+          status: 500,
+          msg: "User Not Found",
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.json({
+        status: 500,
+        msg: "Data not Updated",
+        Error: err,
+      });
+    });
+
+  })
+
+  const deleterescuemember=((req,res)=>{
+    rescuemembersSchema.findByIdAndDelete({_id:req.params.id})
+    .exec()
+    .then((res)=>{
+      res.json({
+        status:200,
+        msg:"Deleted Successfully"
+      })
+    })
+    .catch((err)=>{
+      res.json({
+        status:200,
+        msg:err
+      })
+    })
+
+  })
+
 
 module.exports={
     registerrescuemember,
     rescuememberlogin,
-    resetPwdrescue
+    resetPwdrescue,
+    adminapproveresque,
+    adminrejectresque,
+    viewallresquemembers,
+    viewresquemembersbyid,
+    deleterescuemember
 }

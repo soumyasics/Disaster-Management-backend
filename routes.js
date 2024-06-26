@@ -27,6 +27,11 @@ router.post("/forgotPWDsentMail",volunteers.forgotPWDsentMail)
 router.post("/registerrescuemembers/:id",rescuemembers.registerrescuemember)
 router.post("/rescuememberslogin",rescuemembers.rescuememberlogin)
 router.post("/resetPwdrescue/:id",rescuemembers.resetPwdrescue)
+router.post("/adminapproveresque/:id",rescuemembers.adminapproveresque)
+router.post("/adminrejectresque/:id",rescuemembers.adminrejectresque)
+router.post("/viewallresquemembers",rescuemembers.viewallresquemembers)
+router.post("/viewresquemembersbyid/:id",rescuemembers.viewresquemembersbyid)
+router.post("/deleterescuemember/:id",rescuemembers.deleterescuemember)
 
 
 
