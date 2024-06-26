@@ -1,6 +1,6 @@
 const config = {
     development: {
-        localUrl: 'http://localhost:3000/WebQuard/reset-password/',
+        localUrl: 'http://localhost:3000/WebQuard/reset-passsword/',
         serverUrl: 'http://hybrid.srishticampus.in/web_guard_api/reset-password/',
     },
     // production: {

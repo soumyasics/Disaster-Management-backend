@@ -1,6 +1,7 @@
 const userschema=require("./userSchema")
 const multer = require("multer");
 const volunteers=require("../volunteers/volunteersSchema")
+const rescuemember=require("../rescueteam/rescueteamSchema")
 
 
 const storage = multer.diskStorage({
@@ -25,9 +26,9 @@ const storage = multer.diskStorage({
     });
     let existingCustomer1 = await userschema.findOne({email:req.body.email});
     let existingCustomer2 = await volunteers.findOne({email:req.body.email});
-    // let existingCustomer3 = await employer.findOne({email:req.body.email})
+    let existingCustomer3 = await rescuemember.findOne({email:req.body.email})
 
-    if(existingCustomer1||existingCustomer2 ){
+    if(existingCustomer1||existingCustomer2 ||existingCustomer3){
         return res.json ({
             status : 409,
             msg : "Email Already Registered With Us !!",
@@ -110,7 +111,7 @@ const storage = multer.diskStorage({
   //user login completed
 
   const forgotPwd=(req,res)=>{  
-    userschema.findOneAndUpdate({email:req.body.email},{password:req.body.password})
+    userschema.findByIdAndUpdate({_id:req.params.id},{password:req.body.password})
   .exec()
   .then(data=>{
     if(data!=null)

@@ -1,5 +1,7 @@
 const rescuemembersSchema= require('./rescueteamSchema')
 const secret = 'rescuemembers'; 
+const volunteer=require("../volunteers/volunteersSchema")
+const users=require("../user/userSchema")
 
 const multer = require("multer");
 
@@ -17,11 +19,29 @@ const storage = multer.diskStorage({
   const registerrescuemember = async (req, res) => {
     const rescuemember = new rescuemembersSchema({
         name: req.body.name,
+        age:req.body.age,
+        gender:req.body.gender,
         phone: req.body.phone,
         email: req.body.email,
         password: req.body.password,
         address: req.body.address,
+        city:req.body.city,
+        state:req.body.state,
+        skills:req.body.skills,
+        volunteerid:req.params.id
       });
+      let existingCustomer1 = await users.findOne({email:req.body.email});
+      let existingCustomer2 = await volunteer.findOne({email:req.body.email});
+      let existingCustomer3 = await rescuemembersSchema.findOne({email:req.body.email})
+  
+      if(existingCustomer1||existingCustomer2 ||existingCustomer3){
+          return res.json ({
+              status : 409,
+              msg : "Email Already Registered With Us !!",
+              data : null
+          })
+      }
+  
       rescuemember
         .save()
         .then((data) => {
@@ -60,6 +80,12 @@ const rescuememberlogin=((req,res)=>{
     rescuemembersSchema.findOne({email:email})
      .exec()
      .then((data)=>{
+      if (data.isActive === false) {
+        return res.json({
+            status: 403,
+            msg: "User is not active. Please contact administrator."
+        });
+    }
          if(password==data.password){
              res.json({
                  status:200,
@@ -81,8 +107,36 @@ const rescuememberlogin=((req,res)=>{
      })
    })
 
+   const resetPwdrescue=((req,res)=>{
+    rescuemembersSchema.findByIdAndUpdate({_id:req.params.id},{ password: req.body.password }
+      )
+      .exec()
+      .then((data) => {
+        if (data != null)
+          res.json({
+            status: 200,
+            msg: "Updated successfully",
+          });
+        else
+          res.json({
+            status: 500,
+            msg: "User Not Found",
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.json({
+          status: 500,
+          msg: "Data not Updated",
+          Error: err,
+        });
+      });
+  
+  })
+  
+
 module.exports={
     registerrescuemember,
-    rescuememberlogin
-    
+    rescuememberlogin,
+    resetPwdrescue
 }

@@ -7,7 +7,7 @@ const rescuemembers=require("./models/rescueteam/rescueteamController")
 
 router.post("/registeruser",user.registeruser)
 router.post("/userlogin",user.userlogin)
-router.post("/userforgotpswd",user.forgotPwd)
+router.post("/userforgotpswd/:id",user.forgotPwd)
 router.post("/viewallusers",user.viewalluser)
 router.post("/viewuserbyid/:id",user.viewuserbuid)
 router.post("/editusrprofile/:id",user.editUserById)
@@ -24,8 +24,10 @@ router.post("/deletevolunteerBy/:id",volunteers.deletevolenteerById)
 router.post("/forgotPWDsentMail",volunteers.forgotPWDsentMail)
 
 
-router.post("/registerrescuemembers",rescuemembers.registerrescuemember)
+router.post("/registerrescuemembers/:id",rescuemembers.registerrescuemember)
 router.post("/rescuememberslogin",rescuemembers.rescuememberlogin)
+router.post("/resetPwdrescue/:id",rescuemembers.resetPwdrescue)
+
 
 
 module.exports=router
