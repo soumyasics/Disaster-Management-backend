@@ -4,6 +4,7 @@ const multer = require("multer");
 const nodemailer = require('nodemailer');
 const Configue = require('../../Configue');
 const users=require('../user/userSchema')
+const rescueschema=require("../rescueteam/rescueteamSchema")
 
 
 
@@ -62,8 +63,9 @@ const registervolunteers = async (req, res) => {
 
     const existingCustomer1 = await volunteerschema.findOne({ email: req.body.email }).exec();
     const existingCustomer2 = await users.findOne({ email: req.body.email }).exec();
+    const existingCustomer3 = await rescueschema.findOne({ email: req.body.email }).exec();
 
-    if (existingCustomer1 || existingCustomer2) {
+    if (existingCustomer1 || existingCustomer2 || existingCustomer3) {
       return res.status(409).json({
         status: 409,
         msg: "Email Already Registered With Us !!",
@@ -258,9 +260,9 @@ const editvolenteerById=(req,res)=>{
          if(data==null){
           data = await users.findOne({ email:  req.body.email })
         }
-        // if(data==null){
-        //   data = await employer.findOne({ email: req.body.email})
-        // }
+         if(data==null){
+          data = await rescueschema.findOne({ email: req.body.email})
+        }
         
           if (data != null)
             {
