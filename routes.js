@@ -4,6 +4,7 @@ const router=express.Router()
 const user=require("./models/user/userController")
 const volunteers=require("./models/volunteers/volunteersController")
 const rescuemembers=require("./models/rescueteam/rescueteamController")
+const emergency=require("./models/user/Alerts/alertController")
 
 router.post("/registeruser",user.registeruser)
 router.post("/userlogin",user.userlogin)
@@ -32,6 +33,12 @@ router.post("/adminrejectresque/:id",rescuemembers.adminrejectresque)
 router.post("/viewallresquemembers",rescuemembers.viewallresquemembers)
 router.post("/viewresquemembersbyid/:id",rescuemembers.viewresquemembersbyid)
 router.post("/deleterescuemember/:id",rescuemembers.deleterescuemember)
+
+
+
+//emergency
+router.post("/addemergency",emergency.upload,emergency.registeremergency)
+router.post("/viewemergencyforadmin",emergency.viewemergencyforadmin)
 
 
 
