@@ -35,8 +35,8 @@ const schema=mongoose.Schema({
         required:true
     },
     image:{
-        type:String,
-        required:true
+        type:Object,
+        // required:true
     },
     approvedstatus:{
         type: String,

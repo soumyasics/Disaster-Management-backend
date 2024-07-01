@@ -1,4 +1,4 @@
-const emergencyschema = require("../userController");
+const emergencyschema = require("../Alerts/alertsSchema");
 const multer = require("multer");
 
 const storage = multer.diskStorage({
