@@ -53,7 +53,7 @@ const volunteersSchema=mongoose.Schema({
 
     adminApproved:{
         type:Boolean,
-        default:true
+        default:false
     }
 })
 module.exports=mongoose.model ("volunteers",volunteersSchema);

@@ -109,6 +109,12 @@ const volenteerslogin=((req,res)=>{
     volunteerschema.findOne({email:email})
      .exec()
      .then((data)=>{
+      if (data.adminApproved === false) {
+        return res.json({
+            status: 403,
+            msg: "User is not active. Please contact administrator."
+        });
+    }
          if(password==data.password){
              res.json({
                  status:200,
@@ -129,6 +135,64 @@ const volenteerslogin=((req,res)=>{
          })
      })
    })
+
+   const adminapprovevolunteer = async (req, res) => {
+    await volunteerschema.findByIdAndUpdate({ _id: req.params.id }, { adminApproved: true }).exec()
+        .then((result) => {
+            res.json({
+                status: 200,
+                data: result,
+                msg: 'data updated'
+            })
+        })
+        .catch(err => {
+            res.json({
+                status: 500,
+                msg: 'Error in API',
+                err: err
+            })
+        })
+
+}
+
+const adminviewvolreq = async (req, res) => {
+  await volunteerschema.find({ adminApproved: false }).exec()
+      .then((result) => {
+          res.json({
+              status: 200,
+              data: result,
+          })
+      })
+      .catch(err => {
+          res.json({
+              status: 500,
+              msg: 'Error in API',
+              err: err
+          })
+      })
+
+}
+
+
+const adminrejectvolunteer = async (req, res) => {
+  await volunteerschema.findByIdAndDelete({ _id: req.params.id }).exec()
+      .then((result) => {
+          res.json({
+              status: 200,
+              data: result,
+              msg: 'data deleted'
+          })
+      })
+      .catch(err => {
+          res.json({
+              status: 500,
+              msg: 'Error in API',
+              err: err
+          })
+      })
+
+}
+
 
 // Volunteers Forgot Password
 
@@ -162,7 +226,7 @@ const forgotPwd=((req,res)=>{
   //View all Volenteers
 
   const viewallvolenteers=((req,res)=>{
-    volunteerschema.find()
+    volunteerschema.find({adminApproved:true})
     .exec()
     .then((data)=>{
         if(data!=null){
@@ -300,5 +364,8 @@ module.exports = {
     viewvolenteerById,
     editvolenteerById,
     deletevolenteerById,
-    forgotPWDsentMail
+    forgotPWDsentMail,
+    adminapprovevolunteer,
+    adminrejectvolunteer,
+    adminviewvolreq
 };

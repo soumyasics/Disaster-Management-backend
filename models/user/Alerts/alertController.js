@@ -1,4 +1,4 @@
-const emergencyschema = require("../userController");
+const emergencyschema = require("./alertsSchema");
 const multer = require("multer");
 
 const storage = multer.diskStorage({
@@ -17,7 +17,7 @@ const registeremergency = (req, res) => {
   const emergency = new emergencyschema({
     userid:req.body.userid,
     title:req.body.title,
-    date:req.body.date,
+    date:new Date(),
     discription:req.body.discription,
     caterory:req.body.caterory,
     location:req.body.location,
