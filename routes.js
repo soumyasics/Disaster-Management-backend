@@ -34,7 +34,7 @@ router.post("/viewallresquemembers",rescuemembers.viewallresquemembers)
 router.post("/viewresquemembersbyid/:id",rescuemembers.viewresquemembersbyid)
 router.post("/deleterescuemember/:id",rescuemembers.deleterescuemember)
 
-// router.post("/addalert",alerts.createalert,alerts.upload)
+router.post("/addalert",alerts.createalert,alerts.upload)
 
 
 module.exports=router
