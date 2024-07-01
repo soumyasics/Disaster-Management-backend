@@ -91,6 +91,7 @@ const storage = multer.diskStorage({
             res.json({
                 status:200,
                 msg:"Login Successfully",
+                data:data
              })
         }
         else{
@@ -159,7 +160,7 @@ const storage = multer.diskStorage({
 //view all users completed
 
 const viewuserbuid=((req,res)=>{
-    userschema.findOne({_id:req.params.id})
+    userschema.findById({_id:req.params.id})
     .exec()
     .then((data)=>{
         if(data!=null){
@@ -185,7 +186,6 @@ const viewuserbuid=((req,res)=>{
       address: req.body.address,
       phone: req.body.phone,
       email: req.body.email,
-      password: req.body.password,
         })
   .exec()
   .then(data=>{

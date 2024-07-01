@@ -11,7 +11,7 @@ const schema=mongoose.Schema({
         required:true
     },
     date:{
-        type:String,
+        type:Date,
         required:true
     },
     discription:{
@@ -36,7 +36,7 @@ const schema=mongoose.Schema({
     },
     image:{
         type:Object,
-        // required:true
+        required:true
     },
     approvedstatus:{
         type: String,

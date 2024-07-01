@@ -134,14 +134,35 @@ const rescuememberlogin=((req,res)=>{
   
   })
   
-  const adminapproveresque=((req,res)=>{
-    rescuemembersSchema.findByIdAndUpdate({_id:req.params.id},{ isActive:true }
+  const adminapproveresque = async (req, res) => {
+    await rescuemembersSchema.findByIdAndUpdate({ _id: req.params.id }, { isActive: true }).exec()
+        .then((result) => {
+            res.json({
+                status: 200,
+                data: result,
+                msg: 'data updated'
+            })
+        })
+        .catch(err => {
+            res.json({
+                status: 500,
+                msg: 'Error in API',
+                err: err
+            })
+        })
+
+}
+
+
+  const adminrejectresque=((req,res)=>{
+    rescuemembersSchema.findByIdAndDelete({_id:req.params.id}
       )
       .exec()
       .then((data) => {
         if (data != null)
           res.json({
             status: 200,
+            data:data,
             msg: "Activated successfully",
           });
         else
@@ -161,31 +182,32 @@ const rescuememberlogin=((req,res)=>{
   
   })
 
-  const adminrejectresque=((req,res)=>{
-    rescuemembersSchema.findByIdAndUpdate({_id:req.params.id},{ isActive:false }
-      )
-      .exec()
-      .then((data) => {
-        if (data != null)
-          res.json({
-            status: 200,
-            msg: "Activated successfully",
-          });
-        else
-          res.json({
-            status: 500,
-            msg: "User Not Found",
-          });
-      })
-      .catch((err) => {
-        console.log(err);
+  const viewallrescuereq=((req,res)=>{
+    rescuemembersSchema.find({isActive:false})
+    .exec()
+    .then((data) => {
+      if (data != null)
+        res.json({
+          status: 200,
+          msg: "Find successfully",
+          data:data
+
+        });
+      else
         res.json({
           status: 500,
-          msg: "Data not Updated",
-          Error: err,
+          msg: "User Not Found",
         });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.json({
+        status: 500,
+        msg: "Data not Updated",
+        Error: err,
       });
-  
+    });
+
   })
 
 
@@ -271,5 +293,6 @@ module.exports={
     adminrejectresque,
     viewallresquemembers,
     viewresquemembersbyid,
-    deleterescuemember
+    deleterescuemember,
+    viewallrescuereq
 }
