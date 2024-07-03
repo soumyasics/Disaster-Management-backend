@@ -44,6 +44,11 @@ router.post("/viewallrescuereq",rescuemembers.viewallrescuereq)
 //emergency
 router.post("/addemergency",emergency.upload,emergency.registeremergency)
 router.post("/viewemergencyforadmin",emergency.viewemergencyforadmin)
+router.post("/viewemergencybyid/:id",emergency.viewemergencybyid)
+router.post("/acceptemergencyreq/:id",emergency.acceptemergencyreq)
+router.post("/rejectemergencyreq/:id",emergency.rejectemergencyreq)
+router.post("/viewemergencyforallusers",emergency.viewemergencyforallusers)
+router.post("/viewemergencybyuserid/:id",emergency.viewemergencybyuserid)
 
 
 
