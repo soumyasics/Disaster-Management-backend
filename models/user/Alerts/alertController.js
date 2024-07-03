@@ -66,8 +66,127 @@ const viewemergencyforadmin = (req, res) => {
       })
   
   }
+  const viewemergencybyid= (req, res) => {
+    emergencyschema.findById({_id:req.params.id})
+    .populate('userid')
+    .exec()
+      .then(data => {
+        console.log(data);
+        res.json({
+          status: 200,
+          msg: "Data obtained successfully",
+          data: data
+        })
+  
+      }).catch(err => {
+        console.log(err);
+        res.json({
+          status: 500,
+          msg: "No Data obtained",
+          Error: err
+        })
+      })
+  
+  }
+
+  const acceptemergencyreq = (req, res) => {
+    emergencyschema.findByIdAndUpdate({_id:req.params.id},{approvedstatus:"accept"})
+    .populate('userid')
+    .exec()
+      .then(data => {
+        console.log(data);
+        res.json({
+          status: 200,
+          msg: "Data obtained successfully",
+          data: data
+        })
+  
+      }).catch(err => {
+        console.log(err);
+        res.json({
+          status: 500,
+          msg: "No Data obtained",
+          Error: err
+        })
+      })
+  
+  }
+
+  const rejectemergencyreq = (req, res) => {
+    emergencyschema.findByIdAndDelete({_id:req.params.id})
+    .exec()
+      .then(data => {
+        console.log(data);
+        res.json({
+          status: 200,
+          msg: "Data Deleted successfully",
+          data: data
+        })
+  
+      }).catch(err => {
+        console.log(err);
+        res.json({
+          status: 500,
+          msg: "No Data obtained",
+          Error: err
+        })
+      })
+  
+  }
+
+  const viewemergencyforallusers = (req, res) => {
+    emergencyschema.find({approvedstatus:"accept"})
+    .populate('userid')
+    .exec()
+      .then(data => {
+        console.log(data);
+        res.json({
+          status: 200,
+          msg: "Data obtained successfully",
+          data: data
+        })
+  
+      }).catch(err => {
+        console.log(err);
+        res.json({
+          status: 500,
+          msg: "No Data obtained",
+          Error: err
+        })
+      })
+  
+  }
+
+  const viewemergencybyuserid= (req, res) => {
+    emergencyschema.find({userid:req.params.id})
+    // .populate('userid')
+    .exec()
+      .then(data => {
+        console.log(data);
+        res.json({
+          status: 200,
+          msg: "Data obtained successfully",
+          data: data
+        })
+  
+      }).catch(err => {
+        console.log(err);
+        res.json({
+          status: 500,
+          msg: "No Data obtained",
+          Error: err
+        })
+      })
+  
+  }
+
 
 module.exports={
     registeremergency,upload,
-    viewemergencyforadmin
+    viewemergencyforadmin,
+    viewemergencybyid,
+    acceptemergencyreq,
+    rejectemergencyreq,
+    viewemergencyforallusers,
+    viewemergencybyuserid
 }

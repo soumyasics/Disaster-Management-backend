@@ -83,12 +83,14 @@ const rescuememberlogin=((req,res)=>{
       if (data.isActive === false) {
         return res.json({
             status: 403,
+          
             msg: "User is not active. Please contact administrator."
         });
     }
          if(password==data.password){
              res.json({
                  status:200,
+                 data:data,
                  msg:"Login Successfully",
               })
          }
