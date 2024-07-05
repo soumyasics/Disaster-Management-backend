@@ -26,10 +26,12 @@ router.post("/deletevolunteerBy/:id",volunteers.deletevolenteerById)
 router.post("/forgotPWDsentMail",volunteers.forgotPWDsentMail)
 router.post("/adminapprovevolunteer/:id",volunteers.adminapprovevolunteer)
 router.post("/adminrejectvolunteer/:id",volunteers.adminrejectvolunteer)
+router.post("/editvolenteerById/:id",volunteers.editvolenteerById)
 
 
 
-router.post("/registerrescuemembers/:id",rescuemembers.registerrescuemember)
+
+router.post("/registerrescuemembers",rescuemembers.registerrescuemember)
 router.post("/rescuememberslogin",rescuemembers.rescuememberlogin)
 router.post("/resetPwdrescue/:id",rescuemembers.resetPwdrescue)
 router.post("/adminapproveresque/:id",rescuemembers.adminapproveresque)
@@ -38,6 +40,7 @@ router.post("/viewallresquemembers",rescuemembers.viewallresquemembers)
 router.post("/viewresquemembersbyid/:id",rescuemembers.viewresquemembersbyid)
 router.post("/deleterescuemember/:id",rescuemembers.deleterescuemember)
 router.post("/viewallrescuereq",rescuemembers.viewallrescuereq)
+router.post("/updaterescuemember/:id",rescuemembers.updaterescuemember)
 
 
 
