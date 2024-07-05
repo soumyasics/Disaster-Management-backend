@@ -28,7 +28,7 @@ const storage = multer.diskStorage({
         city:req.body.city,
         state:req.body.state,
         skills:req.body.skills,
-        volunteerid:req.params.id
+        // volunteerid:req.params.id
       });
       let existingCustomer1 = await users.findOne({email:req.body.email});
       let existingCustomer2 = await volunteer.findOne({email:req.body.email});
@@ -242,7 +242,7 @@ const rescuememberlogin=((req,res)=>{
   })
 
   const viewresquemembersbyid=((req,res)=>{
-    rescuemembersSchema.findById({_id:req.params.id})
+    rescuemembersSchema.findOne({_id:req.params.id})
     .exec()
     .then((data) => {
       if (data != null)
@@ -285,6 +285,38 @@ const rescuememberlogin=((req,res)=>{
     })
 
   })
+  const updaterescuemember=((req,res)=>{
+    rescuemembersSchema.findByIdAndUpdate({_id:req.params.id},
+      {
+        name: req.body.name,
+        age:req.body.age,
+        gender:req.body.gender,
+        phone: req.body.phone,
+        email: req.body.email,
+        password: req.body.password,
+        address: req.body.address,
+        city:req.body.city,
+        state:req.body.state,
+        skills:req.body.skills,
+
+      }
+    )
+    .exec()
+    .then((res)=>{
+      res.json({
+        status:200,
+        msg:"Deleted Successfully",
+        data:data
+      })
+    })
+    .catch((err)=>{
+      res.json({
+        status:200,
+        msg:err
+      })
+    })
+
+  })
 
 
 module.exports={
@@ -296,5 +328,6 @@ module.exports={
     viewallresquemembers,
     viewresquemembersbyid,
     deleterescuemember,
-    viewallrescuereq
+    viewallrescuereq,
+    updaterescuemember
 }

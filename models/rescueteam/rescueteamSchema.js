@@ -50,11 +50,11 @@ const rescuemembersSchema=mongoose.Schema({
         type:Boolean,
         default:false
     },
-    volunteerid:{
-        type:mongoose.Schema.Types.ObjectId,
-        required:true,
-        ref:'volunteers'
-    }
+    // volunteerid:{
+    //     type:mongoose.Schema.Types.ObjectId,
+    //     required:true,
+    //     ref:'volunteers'
+    // }
 
 
 })
