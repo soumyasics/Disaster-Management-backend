@@ -87,6 +87,12 @@ const storage = multer.diskStorage({
     userschema.findOne({email:email})
     .exec()
     .then((data)=>{
+      if (data.isActive === false) {
+        return res.json({
+            status: 403,
+            msg: "User is not active. Please contact administrator."
+        });
+    }
         if(password==data.password){
             res.json({
                 status:200,
@@ -139,7 +145,7 @@ const storage = multer.diskStorage({
 //userforget pswd completed
 
   const viewalluser=((req,res)=>{
-    userschema.find()
+    userschema.find({isActive:true})
     .exec()
     .then((data)=>{
         if(data!=null){
@@ -203,8 +209,8 @@ const viewuserbuid=((req,res)=>{
   }
 //edit user profile completed
 
-const deleteUserById=(req,res)=>{
-    userschema.findByIdAndDelete({_id:req.params.id}).exec()
+const deactivateUserById=(req,res)=>{
+    userschema.findByIdAndUpdate({_id:req.params.id},{isActive:false}).exec()
     .then(data=>{
       console.log(data);
       res.json({
@@ -224,6 +230,21 @@ const deleteUserById=(req,res)=>{
   
   }
 
+  const searchuserByName = (req, res) => {
+    userschema.find({ name: { $regex: req.params.name, $options: 'i' } ,isActive:true})
+        .then(user => {
+            if (user.length === 0) {
+                return res.status(404).json({ message: 'No User Found With The Name.' });
+            }
+            res.status(200).json(user);
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).json({ message: 'Server Error' });
+        });
+}
+
+
   module.exports={
             registeruser,
             userlogin,
@@ -231,7 +252,8 @@ const deleteUserById=(req,res)=>{
             viewalluser,
             viewuserbuid,
             editUserById,
-            deleteUserById
+            deactivateUserById,
+            searchuserByName
   }
   
   

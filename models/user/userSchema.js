@@ -31,8 +31,10 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  // image: {
-  //   type: Object,
-  // },
+  isActive:{
+    type: Boolean,
+    default:true
+
+  }
 });
 module.exports = mongoose.model("users", userSchema);

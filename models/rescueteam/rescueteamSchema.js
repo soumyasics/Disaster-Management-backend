@@ -48,8 +48,13 @@ const rescuemembersSchema=mongoose.Schema({
     },
     isActive:{
         type:Boolean,
+        default:true
+    },
+    adminapprove:{
+        type:Boolean,
         default:false
     },
+
     // volunteerid:{
     //     type:mongoose.Schema.Types.ObjectId,
     //     required:true,

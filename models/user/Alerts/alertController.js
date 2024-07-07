@@ -63,8 +63,51 @@ const viewemergencyforadmin = (req, res) => {
           Error: err
         })
       })
-  
   }
+
+  const viewallalerts = (req, res) => {
+    emergencyschema.find()
+    .populate('userid')
+    .exec()
+      .then(data => {
+        console.log(data);
+        res.json({
+          status: 200,
+          msg: "Data obtained successfully",
+          data: data
+        })
+  
+      }).catch(err => {
+        console.log(err);
+        res.json({
+          status: 500,
+          msg: "No Data obtained",
+          Error: err
+        })
+      })
+  }
+  const viewapprovedalert = (req, res) => {
+    emergencyschema.find({approvedstatus:"accept"})
+    .populate('userid')
+    .exec()
+      .then(data => {
+        console.log(data);
+        res.json({
+          status: 200,
+          msg: "Data obtained successfully",
+          data: data
+        })
+  
+      }).catch(err => {
+        console.log(err);
+        res.json({
+          status: 500,
+          msg: "No Data obtained",
+          Error: err
+        })
+      })
+  }
+
   const viewemergencybyid= (req, res) => {
     emergencyschema.findById({_id:req.params.id})
     .populate('userid')
@@ -187,5 +230,7 @@ module.exports={
     acceptemergencyreq,
     rejectemergencyreq,
     viewemergencyforallusers,
-    viewemergencybyuserid
+    viewemergencybyuserid,
+    viewapprovedalert,
+    viewallalerts
 }
