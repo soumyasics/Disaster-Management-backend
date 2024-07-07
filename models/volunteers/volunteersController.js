@@ -109,12 +109,19 @@ const volenteerslogin=((req,res)=>{
     volunteerschema.findOne({email:email})
      .exec()
      .then((data)=>{
-      if (data.adminApproved === false) {
+      if (data.adminApproved === false ) {
         return res.json({
             status: 403,
             msg: "User is not active. Please contact administrator."
         });
     }
+    if (data.isActive === false ) {
+      return res.json({
+          status: 403,
+          msg: "User is not active Please contact administrator."
+      });
+  }
+
          if(password==data.password){
              res.json({
                  status:200,
@@ -227,7 +234,7 @@ const forgotPwd=((req,res)=>{
   //View all Volenteers
 
   const viewallvolenteers=((req,res)=>{
-    volunteerschema.find({adminApproved:true})
+    volunteerschema.find({adminApproved:true,isActive:true})
     .exec()
     .then((data)=>{
         if(data!=null){
@@ -298,8 +305,8 @@ const editvolenteerById=(req,res)=>{
   }
 
   //Delete VolenteerById
-  const deletevolenteerById=(req,res)=>{
-    volunteerschema.findByIdAndDelete({_id:req.params.id}).exec()
+  const deactivatevolenteerById=(req,res)=>{
+    volunteerschema.findByIdAndUpdate({_id:req.params.id},{isActive:false}).exec()
     .then(data=>{
       console.log(data);
       res.json({
@@ -355,7 +362,20 @@ const editvolenteerById=(req,res)=>{
     
       }
     
-
+      const searchvolunteerByName = (req, res) => {
+        volunteerschema.find({ name: { $regex: req.params.name, $options: 'i' } ,isActive:true})
+            .then(user => {
+                if (user.length === 0) {
+                    return res.status(404).json({ message: 'No Volunteer Found With The Name.' });
+                }
+                res.status(200).json(user);
+            })
+            .catch(err => {
+                console.error(err);
+                res.status(500).json({ message: 'Server Error' });
+            });
+    }
+    
 
 module.exports = {
     registervolunteers,
@@ -364,9 +384,10 @@ module.exports = {
     viewallvolenteers,
     viewvolenteerById,
     editvolenteerById,
-    deletevolenteerById,
+    deactivatevolenteerById,
     forgotPWDsentMail,
     adminapprovevolunteer,
     adminrejectvolunteer,
-    adminviewvolreq
+    adminviewvolreq,
+    searchvolunteerByName
 };
