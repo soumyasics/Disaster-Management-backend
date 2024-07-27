@@ -14,7 +14,7 @@ const schema=mongoose.Schema({
     rescueId:{
         type: mongoose.Schema.Types.ObjectId,
         ref: "rescuemembers",
-        required: true,
+        // required: true,
     },
     status:{
         type:String,
