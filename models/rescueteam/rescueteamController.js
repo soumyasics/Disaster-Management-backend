@@ -28,7 +28,7 @@ const storage = multer.diskStorage({
         city:req.body.city,
         state:req.body.state,
         skills:req.body.skills,
-        // volunteerid:req.params.id
+        volunteerid:req.body.volunteerid
       });
       let existingCustomer1 = await users.findOne({email:req.body.email});
       let existingCustomer2 = await volunteer.findOne({email:req.body.email});
@@ -87,13 +87,13 @@ const rescuememberlogin=((req,res)=>{
             msg: "User is not active. Please contact administrator."
         });
     }
-    if (data.adminapprove === false) {
-      return res.json({
-          status: 403,
+  //   if (data.adminapprove === false) {
+  //     return res.json({
+  //         status: 403,
         
-          msg: "User is not active. Please contact administrator."
-      });
-  }
+  //         msg: "User is not active. Please contact administrator."
+  //     });
+  // }
 
          if(password==data.password){
              res.json({
@@ -144,85 +144,85 @@ const rescuememberlogin=((req,res)=>{
   
   })
   
-  const adminapproveresque = async (req, res) => {
-    await rescuemembersSchema.findByIdAndUpdate({ _id: req.params.id }, { adminapprove: true }).exec()
-        .then((result) => {
-            res.json({
-                status: 200,
-                data: result,
-                msg: 'data updated'
-            })
-        })
-        .catch(err => {
-            res.json({
-                status: 500,
-                msg: 'Error in API',
-                err: err
-            })
-        })
+//   const adminapproveresque = async (req, res) => {
+//     await rescuemembersSchema.findByIdAndUpdate({ _id: req.params.id }, { adminapprove: true }).exec()
+//         .then((result) => {
+//             res.json({
+//                 status: 200,
+//                 data: result,
+//                 msg: 'data updated'
+//             })
+//         })
+//         .catch(err => {
+//             res.json({
+//                 status: 500,
+//                 msg: 'Error in API',
+//                 err: err
+//             })
+//         })
 
-}
+// }
 
 
-  const adminrejectresque=((req,res)=>{
-    rescuemembersSchema.findByIdAndDelete({_id:req.params.id}
-      )
-      .exec()
-      .then((data) => {
-        if (data != null)
-          res.json({
-            status: 200,
-            data:data,
-            msg: "Activated successfully",
-          });
-        else
-          res.json({
-            status: 500,
-            msg: "User Not Found",
-          });
-      })
-      .catch((err) => {
-        console.log(err);
-        res.json({
-          status: 500,
-          msg: "Data not Updated",
-          Error: err,
-        });
-      });
+  // const adminrejectresque=((req,res)=>{
+  //   rescuemembersSchema.findByIdAndDelete({_id:req.params.id}
+  //     )
+  //     .exec()
+  //     .then((data) => {
+  //       if (data != null)
+  //         res.json({
+  //           status: 200,
+  //           data:data,
+  //           msg: "Activated successfully",
+  //         });
+  //       else
+  //         res.json({
+  //           status: 500,
+  //           msg: "User Not Found",
+  //         });
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //       res.json({
+  //         status: 500,
+  //         msg: "Data not Updated",
+  //         Error: err,
+  //       });
+  //     });
   
-  })
+  // })
 
-  const viewallrescuereq=((req,res)=>{
-    rescuemembersSchema.find({adminapprove:false})
-    .exec()
-    .then((data) => {
-      if (data != null)
-        res.json({
-          status: 200,
-          msg: "Find successfully",
-          data:data
+  // const viewallrescuereq=((req,res)=>{
+  //   rescuemembersSchema.find({adminapprove:false})
+  //   .exec()
+  //   .then((data) => {
+  //     if (data != null)
+  //       res.json({
+  //         status: 200,
+  //         msg: "Find successfully",
+  //         data:data
 
-        });
-      else
-        res.json({
-          status: 500,
-          msg: "User Not Found",
-        });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.json({
-        status: 500,
-        msg: "Data not Updated",
-        Error: err,
-      });
-    });
+  //       });
+  //     else
+  //       res.json({
+  //         status: 500,
+  //         msg: "User Not Found",
+  //       });
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //     res.json({
+  //       status: 500,
+  //       msg: "Data not Updated",
+  //       Error: err,
+  //     });
+  //   });
 
-  })
+  // })
 
 
   const viewallresquemembers=((req,res)=>{
-    rescuemembersSchema.find({isActive:true,adminapprove:true})
+    rescuemembersSchema.find({isActive:true,})
     .exec()
     .then((data) => {
       if (data != null)
@@ -248,6 +248,35 @@ const rescuememberlogin=((req,res)=>{
     });
 
   })
+
+  const viewallresquemembersbyvolid=((req,res)=>{
+    rescuemembersSchema.find({volunteerid:req.params.id, isActive:true})
+    .exec()
+    .then((data) => {
+      if (data != null)
+        res.json({
+          status: 200,
+          msg: "Find successfully",
+          data:data
+
+        });
+      else
+        res.json({
+          status: 500,
+          msg: "User Not Found",
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.json({
+        status: 500,
+        msg: "Data not Updated",
+        Error: err,
+      });
+    });
+
+  })
+
 
   const viewresquemembersbyid=((req,res)=>{
     rescuemembersSchema.findOne({_id:req.params.id})
@@ -345,12 +374,10 @@ module.exports={
     registerrescuemember,
     rescuememberlogin,
     resetPwdrescue,
-    adminapproveresque,
-    adminrejectresque,
     viewallresquemembers,
     viewresquemembersbyid,
     deactivaterescuemember,
-    viewallrescuereq,
     updaterescuemember,
-    searchrescueByName
+    searchrescueByName,
+    viewallresquemembersbyvolid
 }
