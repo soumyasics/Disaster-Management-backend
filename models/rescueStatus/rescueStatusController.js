@@ -64,15 +64,17 @@ const viewStatusById=((req,res)=>{
 
 const viewStatusByrescueId=((req,res)=>{
     rescueStatus.find({rescueId:req.params.id})
+    .populate("rescueId")
     .exec()
     .then((data) => {
         res.json({
           status: 200,
-          msg: "Added Successfully",
+          msg: "Data Obtained Successfully",
           data: data,
         });
       })
       .catch((err) => {
+        console.log(err);
         res.json({
           status: 500,
           err: err,
