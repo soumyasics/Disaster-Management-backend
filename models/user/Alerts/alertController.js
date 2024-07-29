@@ -17,6 +17,7 @@ const storage = multer.diskStorage({
 const registeremergency = (req, res) => {
   const emergency = new emergencyschema({
     userid:req.body.userid,
+    volid:req.body.volid,
     title:req.body.title,
     date:new Date(),
     discription:req.body.discription,
@@ -36,6 +37,37 @@ const registeremergency = (req, res) => {
       });
     })
     .catch((err) => {
+      console.log(err);
+        res.json({
+            status:500,
+            err:err
+        })
+    });
+};
+
+const volregisteremergency = (req, res) => {
+  const emergency = new emergencyschema({
+    volid:req.body.volid,
+    title:req.body.title,
+    date:new Date(),
+    discription:req.body.discription,
+    caterory:req.body.caterory,
+    location:req.body.location,
+    needs:req.body.needs,
+    securitylevel:req.body.securitylevel,
+    image:req.file
+  });
+  emergency
+    .save()
+    .then((data) => {
+      res.json({
+        status: 200,
+        msg: "Inserted Successfully",
+        data: data,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
         res.json({
             status:500,
             err:err
@@ -233,5 +265,6 @@ module.exports={
     viewemergencyforallusers,
     viewemergencybyuserid,
     viewapprovedalert,
-    viewallalerts
+    viewallalerts,
+    volregisteremergency
 }

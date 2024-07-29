@@ -4,7 +4,11 @@ const schema=mongoose.Schema({
     userid: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "users",
-        required: true,
+        // required: true,
+    },
+    volid:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "volunteers",
     },
     title:{
         type:String,

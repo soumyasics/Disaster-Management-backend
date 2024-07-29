@@ -9,6 +9,7 @@ const emergency=require("./models/user/Alerts/alertController")
 const emergencyrescue=require("./models/volunteers/AssignRescuemember/emergencyRescueController")
 const addstatus=require("./models/rescueStatus/rescueStatusController")
 const complaints=require("./models/Complaints/complaintController")
+const privacypolicy=require('./models/PrivacyPolicy/PrivacyPolicyController')
 
 router.post("/registeruser",user.registeruser)
 router.post("/userlogin",user.userlogin)
@@ -59,6 +60,8 @@ router.post("/viewemergencyforallusers",emergency.viewemergencyforallusers)
 router.post("/viewemergencybyuserid/:id",emergency.viewemergencybyuserid)
 router.post("/viewallalerts",emergency.viewallalerts)
 router.post("/viewapprovedalert",emergency.viewapprovedalert)
+router.post("/volregisteremergency",emergency.upload,emergency.volregisteremergency)
+
 
 //add rescuemember for emergency
 router.post("/addrescue",emergencyrescue.addRescue)
@@ -78,6 +81,19 @@ router.post("/viewStatusByalertId/:id",addstatus.viewStatusByalertId)
 
 //complaints
 router.post("/addcomplaint",complaints.addcomplaint)
+
+
+//privacy Policy
+
+router.post('/addPrivacyPolicy',privacypolicy.addPrivacyPolicy)
+router.post('/viewprivacypolicy',privacypolicy.viewprivacypolicy)
+router.post('/privatepolicycount',privacypolicy.privatepolicycount)
+router.post('/updateprivacypolicy/:id',privacypolicy.updateprivacypolicy)
+router.post('/viewprivacypolicyById/:id',privacypolicy.viewprivacypolicyById)
+
+
+
+
 
 
 module.exports=router
