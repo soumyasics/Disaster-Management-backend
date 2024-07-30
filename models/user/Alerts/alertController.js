@@ -17,7 +17,6 @@ const storage = multer.diskStorage({
 const registeremergency = (req, res) => {
   const emergency = new emergencyschema({
     userid:req.body.userid,
-    volid:req.body.volid,
     title:req.body.title,
     date:new Date(),
     discription:req.body.discription,
@@ -74,6 +73,37 @@ const volregisteremergency = (req, res) => {
         })
     });
 };
+
+const rescueregisteremergency = (req, res) => {
+  const emergency = new emergencyschema({
+    rescueid:req.body.rescueid,
+    title:req.body.title,
+    date:new Date(),
+    discription:req.body.discription,
+    caterory:req.body.caterory,
+    location:req.body.location,
+    needs:req.body.needs,
+    securitylevel:req.body.securitylevel,
+    image:req.file
+  });
+  emergency
+    .save()
+    .then((data) => {
+      res.json({
+        status: 200,
+        msg: "Inserted Successfully",
+        data: data,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+        res.json({
+            status:500,
+            err:err
+        })
+    });
+};
+
 
 
 const viewemergencyforadmin = (req, res) => {
@@ -212,6 +242,8 @@ const viewemergencyforadmin = (req, res) => {
   const viewemergencyforallusers = (req, res) => {
     emergencyschema.find({approvedstatus:"accept"})
     .populate('userid')
+    .populate('volid')
+    .populate('rescueid')
     .exec()
       .then(data => {
         console.log(data);
@@ -266,5 +298,6 @@ module.exports={
     viewemergencybyuserid,
     viewapprovedalert,
     viewallalerts,
-    volregisteremergency
+    volregisteremergency,
+    rescueregisteremergency
 }

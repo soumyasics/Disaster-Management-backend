@@ -61,6 +61,7 @@ router.post("/viewemergencybyuserid/:id",emergency.viewemergencybyuserid)
 router.post("/viewallalerts",emergency.viewallalerts)
 router.post("/viewapprovedalert",emergency.viewapprovedalert)
 router.post("/volregisteremergency",emergency.upload,emergency.volregisteremergency)
+router.post("/rescueregisteremergency",emergency.upload,emergency.rescueregisteremergency)
 
 
 //add rescuemember for emergency
