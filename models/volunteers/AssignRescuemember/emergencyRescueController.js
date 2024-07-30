@@ -34,7 +34,7 @@ const addRescue = async (req, res) => {
     });
 };
 
-viewpendingtasksforRescue=((req, res) => {
+const viewpendingtasksforRescue=((req, res) => {
   emergencyrescue
     .find({ rescueId: req.params.id, rescueApprove: "pending" })
     .populate("alertId volunteerId")
@@ -54,7 +54,7 @@ viewpendingtasksforRescue=((req, res) => {
     });
 });
 
-rescueApprovetask = (req, res) => {
+const rescueApprovetask = (req, res) => {
   emergencyrescue
     .findByIdAndUpdate({ _id: req.params.id }, { rescueApprove: "approved" })
     .exec()
@@ -73,7 +73,7 @@ rescueApprovetask = (req, res) => {
     });
 };
 
-rescuerejecttask = (req, res) => {
+const rescuerejecttask = (req, res) => {
   emergencyrescue
     .findByIdAndUpdate({ _id: req.params.id }, { rescueApprove: "reject" })
     .exec()
@@ -92,7 +92,7 @@ rescuerejecttask = (req, res) => {
     });
 };
 
-viewApprovedtasksforRescue = (req, res) => {
+const viewApprovedtasksforRescue = (req, res) => {
   emergencyrescue
     .find({ rescueId: req.params.id, rescueApprove: "approved" })
     .populate("alertId volunteerId")
@@ -111,7 +111,7 @@ viewApprovedtasksforRescue = (req, res) => {
       });
     });
 };
-userviewrescueteams = (req, res) => {
+const userviewrescueteams = (req, res) => {
   emergencyrescue
     .find({ alertId: req.params.id, rescueApprove: "approved" })
     .populate("alertId volunteerId rescueId")
@@ -131,7 +131,7 @@ userviewrescueteams = (req, res) => {
     });
 };
 
-viewacceptedemrgforvol = (req, res) => {
+const viewacceptedemrgforvol = (req, res) => {
   emergencyrescue
     .find({ volunteerId: req.params.id })
     .populate("alertId  rescueId")

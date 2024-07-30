@@ -10,6 +10,10 @@ const schema=mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "volunteers",
     },
+    rescueid:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "rescuemembers",
+    },
     title:{
         type:String,
         required:true
