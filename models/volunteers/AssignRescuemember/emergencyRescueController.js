@@ -139,10 +139,10 @@ const viewacceptedemrgforvol = (req, res) => {
     .then((data) => {
       const uniqueAlerts = new Set();
       const uniqueData = data.filter((item) => {
-        if (uniqueAlerts.has(item.alertId.toString())) {
+        if (uniqueAlerts.has(item?.alertId?.toString())) {
           return false;
         } else {
-          uniqueAlerts.add(item.alertId.toString());
+          uniqueAlerts.add(item?.alertId?.toString());
           return true;
         }
       });
@@ -153,6 +153,7 @@ const viewacceptedemrgforvol = (req, res) => {
       });
     })
     .catch((err) => {
+      console.log(err);
       res.json({
         status: 500,
         err: err,
