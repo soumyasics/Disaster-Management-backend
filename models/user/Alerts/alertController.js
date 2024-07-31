@@ -287,6 +287,29 @@ const viewemergencyforadmin = (req, res) => {
   
   }
 
+  const viewemergencybyvolid= (req, res) => {
+    emergencyschema.find({volid:req.params.id})
+    // .populate('userid')
+    .exec()
+      .then(data => {
+        console.log(data);
+        res.json({
+          status: 200,
+          msg: "Data obtained successfully",
+          data: data
+        })
+  
+      }).catch(err => {
+        console.log(err);
+        res.json({
+          status: 500,
+          msg: "No Data obtained",
+          Error: err
+        })
+      })
+  
+  }
+
 
 module.exports={
     registeremergency,upload,
@@ -296,6 +319,7 @@ module.exports={
     rejectemergencyreq,
     viewemergencyforallusers,
     viewemergencybyuserid,
+    viewemergencybyvolid,
     viewapprovedalert,
     viewallalerts,
     volregisteremergency,

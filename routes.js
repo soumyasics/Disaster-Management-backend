@@ -58,6 +58,7 @@ router.post("/acceptemergencyreq/:id",emergency.acceptemergencyreq)
 router.post("/rejectemergencyreq/:id",emergency.rejectemergencyreq)
 router.post("/viewemergencyforallusers",emergency.viewemergencyforallusers)
 router.post("/viewemergencybyuserid/:id",emergency.viewemergencybyuserid)
+router.post("/viewemergencybyvolid/:id",emergency.viewemergencybyvolid)
 router.post("/viewallalerts",emergency.viewallalerts)
 router.post("/viewapprovedalert",emergency.viewapprovedalert)
 router.post("/volregisteremergency",emergency.upload,emergency.volregisteremergency)
@@ -79,6 +80,8 @@ router.post("/viewStatusByVolId/:id",addstatus.viewStatusByVolId)
 router.post("/viewStatusById/:id",addstatus.viewStatusById)
 router.post("/viewStatusByrescueId/:id",addstatus.viewStatusByrescueId)
 router.post("/viewStatusByalertId/:id",addstatus.viewStatusByalertId)
+router.post("/viewAlertStatusByrescueId/:id",addstatus.viewAlertStatusByrescueId)
+
 
 //complaints
 router.post("/addcomplaint",complaints.addcomplaint)
