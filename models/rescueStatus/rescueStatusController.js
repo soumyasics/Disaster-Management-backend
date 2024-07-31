@@ -106,7 +106,7 @@ const viewAlertStatusByrescueId=((req,res)=>{
 })
 const viewStatusByalertId=((req,res)=>{
     rescueStatus.find({alertId:req.params.id})
-    .populate("alertId rescueId")
+    .populate("alertId rescueId volunteerId")
     .exec()
     .then((data) => {
         res.json({
