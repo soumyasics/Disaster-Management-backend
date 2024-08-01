@@ -38,7 +38,7 @@ const volunteersSchema=mongoose.Schema({
         type:String,
         required:true
     },
-    state:{
+    district:{
         type:String,
         required:true
     },
