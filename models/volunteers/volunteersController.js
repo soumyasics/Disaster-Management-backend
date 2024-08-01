@@ -57,7 +57,7 @@ const registervolunteers = async (req, res) => {
       password: req.body.password,
       address: req.body.address,
       city: req.body.city,
-      state: req.body.state,
+      district: req.body.district,
       skills: req.body.skills,
     });
 

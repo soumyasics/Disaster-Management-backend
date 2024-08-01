@@ -30,7 +30,7 @@ const schema=mongoose.Schema({
         type:String,
         required:true
     },
-    location:{
+    district:{
         type:String,
         required:true
     },

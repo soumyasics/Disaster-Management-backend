@@ -21,7 +21,7 @@ const registeremergency = (req, res) => {
     date:new Date(),
     discription:req.body.discription,
     caterory:req.body.caterory,
-    location:req.body.location,
+    district:req.body.district,
     needs:req.body.needs,
     securitylevel:req.body.securitylevel,
     image:req.file
@@ -51,7 +51,7 @@ const volregisteremergency = (req, res) => {
     date:new Date(),
     discription:req.body.discription,
     caterory:req.body.caterory,
-    location:req.body.location,
+    district:req.body.district,
     needs:req.body.needs,
     securitylevel:req.body.securitylevel,
     image:req.file
@@ -81,7 +81,7 @@ const rescueregisteremergency = (req, res) => {
     date:new Date(),
     discription:req.body.discription,
     caterory:req.body.caterory,
-    location:req.body.location,
+    district:req.body.district,
     needs:req.body.needs,
     securitylevel:req.body.securitylevel,
     image:req.file
@@ -240,7 +240,7 @@ const viewemergencyforadmin = (req, res) => {
   }
 
   const viewemergencyforallusers = (req, res) => {
-    emergencyschema.find({approvedstatus:"accept"})
+    emergencyschema.find({approvedstatus:"accept",district:req.params.district})
     .populate('userid')
     .populate('volid')
     .populate('rescueid')

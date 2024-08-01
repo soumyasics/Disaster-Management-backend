@@ -133,7 +133,7 @@ const userviewrescueteams = (req, res) => {
 
 const viewacceptedemrgforvol = (req, res) => {
   emergencyrescue
-    .find({ volunteerId: req.params.id })
+    .find({ volunteerId: req.params.id})
     .populate("alertId  rescueId")
     .exec()
     .then((data) => {
@@ -161,6 +161,47 @@ const viewacceptedemrgforvol = (req, res) => {
     });
 };
 
+const volviewrescumembers = (req, res) => {
+  emergencyrescue
+    .find({ alertId: req.params.id,rescueApprove:'approved'})
+    .populate("alertId volunteerId rescueId")
+    .exec()
+    .then((data) => {
+      res.json({
+        status: 200,
+        msg: "Added Successfully",
+        data: data,
+      });
+    })
+    .catch((err) => {
+      res.json({
+        status: 500,
+        err: err,
+      });
+    });
+};
+
+const volremoveresucemember = (req, res) => {
+  emergencyrescue
+    .findOneAndUpdate({ rescueId:req.params.id },{ rescueApprove: "reject"})
+    .exec()
+    .then((data) => {
+      res.json({
+        status: 200,
+        msg: "Rescue Member Removed",
+        data: data,
+      });
+    })
+    .catch((err) => {
+      res.json({
+        status: 500,
+        err: err,
+      });
+    });
+};
+
+
+
 module.exports = {
   addRescue,
   viewpendingtasksforRescue,
@@ -169,4 +210,6 @@ module.exports = {
   viewApprovedtasksforRescue,
   userviewrescueteams,
   viewacceptedemrgforvol,
+  volviewrescumembers,
+  volremoveresucemember
 };
