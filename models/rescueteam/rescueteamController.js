@@ -311,7 +311,8 @@ const rescuememberlogin=((req,res)=>{
     .then((res)=>{
       res.json({
         status:200,
-        msg:"Deleted Successfully"
+        msg:"Deleted Successfully",
+        data:res
       })
     })
     .catch((err)=>{
