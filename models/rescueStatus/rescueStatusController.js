@@ -104,6 +104,30 @@ const viewAlertStatusByrescueId=((req,res)=>{
     });
 
 })
+
+
+const viewAlertStatusforuserByvolId=((req,res)=>{
+  rescueStatus.find({volunteerId:req.params.id,alertId:req.body.alertId})
+  .populate("alertId")
+  .populate("volunteerId")
+  .exec()
+  .then((data) => {
+      res.json({
+        status: 200,
+        msg: "Data Obtained Successfully",
+        data: data,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.json({
+        status: 500,
+        err: err,
+      });
+    });
+
+})
+
 const viewStatusByalertId=((req,res)=>{
     rescueStatus.find({alertId:req.params.id})
     .populate("alertId rescueId volunteerId")
@@ -131,6 +155,7 @@ module.exports={
     viewStatusById,
     viewStatusByrescueId,
     viewStatusByalertId,
-    viewAlertStatusByrescueId
+    viewAlertStatusByrescueId,
+    viewAlertStatusforuserByvolId
 }
 

@@ -86,6 +86,7 @@ router.post("/viewStatusById/:id",addstatus.viewStatusById)
 router.post("/viewStatusByrescueId/:id",addstatus.viewStatusByrescueId)
 router.post("/viewStatusByalertId/:id",addstatus.viewStatusByalertId)
 router.post("/viewAlertStatusByrescueId/:id",addstatus.viewAlertStatusByrescueId)
+router.post("/viewAlertStatusforuserByvolId/:id",addstatus.viewAlertStatusforuserByvolId)
 
 
 //complaints
