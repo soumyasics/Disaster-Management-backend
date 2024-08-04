@@ -89,7 +89,7 @@ router.post("/viewAlertStatusByrescueId/:id",addstatus.viewAlertStatusByrescueId
 router.post("/viewAlertStatusforuserByvolId/:id",addstatus.viewAlertStatusforuserByvolId)
 
 
-//complaints
+//complaints added
 router.post("/addcomplaint",compalints.addcomplaint)
 router.post("/viewallcomplaints",compalints.viewallcomplaints)
 
