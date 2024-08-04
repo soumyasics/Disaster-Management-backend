@@ -130,7 +130,7 @@ const viewemergencyforadmin = (req, res) => {
 
   const viewallalerts = (req, res) => {
     emergencyschema.find()
-    .populate('userid')
+    .populate('userid rescueid volid')
     .exec()
       .then(data => {
         console.log(data);
@@ -151,7 +151,7 @@ const viewemergencyforadmin = (req, res) => {
   }
   const viewapprovedalert = (req, res) => {
     emergencyschema.find({approvedstatus:"accept"})
-    .populate('userid')
+    .populate('userid volid rescueid')
     .exec()
       .then(data => {
         console.log(data);
@@ -173,7 +173,7 @@ const viewemergencyforadmin = (req, res) => {
 
   const viewemergencybyid= (req, res) => {
     emergencyschema.findById({_id:req.params.id})
-    .populate('userid')
+    .populate('userid volid rescueid')
     .exec()
       .then(data => {
         console.log(data);
