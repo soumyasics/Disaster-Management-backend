@@ -69,7 +69,7 @@ router.post("/viewcompletedemergencies",emergency.viewcompletedemergencies)
 
 
 
-//add rescuemember for emergency
+//add rescuemember for emergencies
 router.post("/addrescue",emergencyrescue.addRescue)
 router.post("/viewpendingtasksforRescue/:id",emergencyrescue.viewpendingtasksforRescue)
 router.post("/rescueApprovetask/:id",emergencyrescue.rescueApprovetask)
