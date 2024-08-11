@@ -129,7 +129,7 @@ const viewemergencyforadmin = (req, res) => {
   }
 
   const viewallalerts = (req, res) => {
-    emergencyschema.find()
+    emergencyschema.find({isActive:true})
     .populate('userid rescueid volid')
     .exec()
       .then(data => {
@@ -150,7 +150,7 @@ const viewemergencyforadmin = (req, res) => {
       })
   }
   const viewapprovedalert = (req, res) => {
-    emergencyschema.find({approvedstatus:"accept"})
+    emergencyschema.find({approvedstatus:"accept", isActive:true})
     .populate('userid volid rescueid')
     .exec()
       .then(data => {
@@ -196,7 +196,7 @@ const viewemergencyforadmin = (req, res) => {
   }
 
   const acceptemergencyreq = (req, res) => {
-    emergencyschema.findByIdAndUpdate({_id:req.params.id},{approvedstatus:"accept"})
+    emergencyschema.findByIdAndUpdate({_id:req.params.id},{approvedstatus:"accept", isActive:true})
     .populate('userid')
     .exec()
       .then(data => {
@@ -241,7 +241,7 @@ const viewemergencyforadmin = (req, res) => {
   }
 
   const viewemergencyforallusers = (req, res) => {
-    emergencyschema.find({approvedstatus:"accept",district:req.params.district})
+    emergencyschema.find({approvedstatus:"accept",district:req.params.district, isActive:true})
     .populate('userid')
     .populate('volid')
     .populate('rescueid')
@@ -266,7 +266,7 @@ const viewemergencyforadmin = (req, res) => {
   }
 
   const viewemergencybyuserid= (req, res) => {
-    emergencyschema.find({userid:req.params.id})
+    emergencyschema.find({userid:req.params.id,isActive:true})
     // .populate('userid')
     .exec()
       .then(data => {
@@ -289,7 +289,7 @@ const viewemergencyforadmin = (req, res) => {
   }
 
   const viewemergencybyvolid= (req, res) => {
-    emergencyschema.find({volid:req.params.id})
+    emergencyschema.find({volid:req.params.id,isActive:true})
     // .populate('userid')
     .exec()
       .then(data => {
@@ -312,7 +312,7 @@ const viewemergencyforadmin = (req, res) => {
   }
 
   const viewemergencybyrescueid= (req, res) => {
-    emergencyschema.find({rescueid:req.params.id})
+    emergencyschema.find({rescueid:req.params.id,isActive:true})
     // .populate('userid')
     .exec()
       .then(data => {
@@ -334,6 +334,55 @@ const viewemergencyforadmin = (req, res) => {
   
   }
 
+  const deactivateAlertbyadmin = (req, res) => {
+    emergencyschema.findByIdAndUpdate({_id:req.params.id},{isActive:false})
+    .exec()
+      .then(data => {
+        console.log(data);
+        res.json({
+          status: 200,
+          msg: "Data Deleted successfully",
+          data: data
+        })
+  
+      }).catch(err => {
+        console.log(err);
+        res.json({
+          status: 500,
+          msg: "No Data obtained",
+          Error: err
+        })
+      })
+  
+  }
+
+
+  const viewcompletedemergencies = (req, res) => {
+    emergencyschema.find({approvedstatus:"accept", isActive:false})
+    .populate('userid')
+    .populate('volid')
+    .populate('rescueid')
+    .exec()
+      .then(data => {
+        console.log(data);
+        res.json({
+          status: 200,
+          msg: "Data obtained successfully",
+          data: data
+        })
+  
+      }).catch(err => {
+        console.log(err);
+        res.json({
+          status: 500,
+          msg: "No Data obtained",
+          Error: err
+        })
+      })
+  
+  }
+
+
 
 module.exports={
     registeremergency,upload,
@@ -348,5 +397,7 @@ module.exports={
     viewallalerts,
     volregisteremergency,
     rescueregisteremergency,
-    viewemergencybyrescueid
+    viewemergencybyrescueid,
+    deactivateAlertbyadmin,
+    viewcompletedemergencies
 }

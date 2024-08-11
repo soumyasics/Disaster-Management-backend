@@ -49,6 +49,10 @@ const schema=mongoose.Schema({
     approvedstatus:{
         type: String,
         default: "pending"
+    },
+    isActive:{
+        type:Boolean,
+        default:false
     }
  
 });

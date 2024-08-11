@@ -50,7 +50,7 @@ router.post("/viewallresquemembersbyvolid/:id",rescuemembers.viewallresquemember
 
 
 
-//emergency
+//emergencies
 router.post("/addemergency",emergency.upload,emergency.registeremergency)
 router.post("/viewemergencyforadmin",emergency.viewemergencyforadmin)
 router.post("/viewemergencybyid/:id",emergency.viewemergencybyid)
@@ -64,9 +64,12 @@ router.post("/viewallalerts",emergency.viewallalerts)
 router.post("/viewapprovedalert",emergency.viewapprovedalert)
 router.post("/volregisteremergency",emergency.upload,emergency.volregisteremergency)
 router.post("/rescueregisteremergency",emergency.upload,emergency.rescueregisteremergency)
+router.post("/deactivateAlertbyadmin/:id",emergency.deactivateAlertbyadmin)
+router.post("/viewcompletedemergencies",emergency.viewcompletedemergencies)
 
 
-//add rescuemember for emergency
+
+//add rescuemember for emergencies
 router.post("/addrescue",emergencyrescue.addRescue)
 router.post("/viewpendingtasksforRescue/:id",emergencyrescue.viewpendingtasksforRescue)
 router.post("/rescueApprovetask/:id",emergencyrescue.rescueApprovetask)
