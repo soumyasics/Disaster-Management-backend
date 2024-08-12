@@ -257,9 +257,11 @@ const forgotPwd=((req,res)=>{
 
   
 const viewvolenteerById=((req,res)=>{
-    volunteerschema.findOne({_id:req.params.id})
+    volunteerschema.findById({_id:req.params.id})
     .exec()
     .then((data)=>{
+      console.log(data);
+      
         if(data!=null){
             res.json({
                 status:200,
@@ -273,6 +275,15 @@ const viewvolenteerById=((req,res)=>{
                 msg:"No Data obtained "
             })        
         }
+    })
+    .catch(err=>{
+      console.log(err);
+      
+      res.json({
+          status:500,
+          msg:"Data not Updated",
+          Error:err
+      })
     })
   })
 //Edit VolenteerById

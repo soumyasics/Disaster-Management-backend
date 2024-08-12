@@ -171,6 +171,7 @@ const viewemergencyforadmin = (req, res) => {
       })
   }
 
+
   const viewemergencybyid= (req, res) => {
     emergencyschema.findById({_id:req.params.id})
     .populate('userid volid rescueid')

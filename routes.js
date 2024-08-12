@@ -94,6 +94,8 @@ router.post("/viewAlertStatusforuserByvolId/:id",addstatus.viewAlertStatusforuse
 
 //complaints added
 router.post("/addcomplaint",compalints.addcomplaint)
+router.post("/addcomplaintbyVolunteer",compalints.addcomplaintbyVolunteer)
+router.post("/addcomplaintbyRescue",compalints.addcomplaintbyRescue)
 router.post("/viewallcomplaints",compalints.viewallcomplaints)
 
 
@@ -108,7 +110,7 @@ router.post('/viewprivacypolicyById/:id',privacypolicy.viewprivacypolicyById)
 
 // user complaints
 
-router.post('/addcomplaint',compalints.addcomplaint)
+// router.post('/addcomplaint',compalints.addcomplaint)
 
 
 
