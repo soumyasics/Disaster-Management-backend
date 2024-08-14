@@ -56,7 +56,7 @@ const registervolunteers = async (req, res) => {
       email: req.body.email,
       password: req.body.password,
       address: req.body.address,
-      city: req.body.city,
+      // city: req.body.city,
       district: req.body.district,
       skills: req.body.skills,
     });
@@ -296,7 +296,7 @@ const editvolenteerById=(req,res)=>{
         email: req.body.email,
         password: req.body.password,
         address: req.body.address,
-        city: req.body.city,
+        // city: req.body.city,
         state: req.body.state,
         skills: req.body.skills,
         })

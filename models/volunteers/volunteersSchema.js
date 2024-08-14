@@ -34,10 +34,10 @@ const volunteersSchema=mongoose.Schema({
         type:String,
         required:true
     },
-    city:{
-        type:String,
-        required:true
-    },
+    // city:{
+    //     type:String,
+    //     required:true
+    // },
     district:{
         type:String,
         required:true
