@@ -53,6 +53,7 @@ router.post("/viewallresquemembersbyvolid/:id",rescuemembers.viewallresquemember
 //emergencies
 router.post("/addemergency",emergency.upload,emergency.registeremergency)
 router.post("/viewemergencyforadmin",emergency.viewemergencyforadmin)
+router.post("/viewallemergencyforadminlength",emergency.viewallemergencyforadminlength)
 router.post("/viewemergencybyid/:id",emergency.viewemergencybyid)
 router.post("/acceptemergencyreq/:id",emergency.acceptemergencyreq)
 router.post("/rejectemergencyreq/:id",emergency.rejectemergencyreq)
