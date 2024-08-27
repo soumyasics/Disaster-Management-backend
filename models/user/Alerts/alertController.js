@@ -128,6 +128,29 @@ const viewemergencyforadmin = (req, res) => {
       })
   }
 
+  const viewallemergencyforadminlength = (req, res) => {
+    emergencyschema.find({})
+    .populate('userid')
+    .exec()
+      .then(data => {
+        console.log(data);
+        res.json({
+          status: 200,
+          msg: "Data obtained successfully",
+          data: data
+        })
+  
+      }).catch(err => {
+        console.log(err);
+        res.json({
+          status: 500,
+          msg: "No Data obtained",
+          Error: err
+        })
+      })
+  }
+
+
   const viewallalerts = (req, res) => {
     emergencyschema.find({isActive:true})
     .populate('userid rescueid volid')
@@ -399,5 +422,6 @@ module.exports={
     rescueregisteremergency,
     viewemergencybyrescueid,
     deactivateAlertbyadmin,
-    viewcompletedemergencies
+    viewcompletedemergencies,
+    viewallemergencyforadminlength
 }
